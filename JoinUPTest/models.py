@@ -23,24 +23,22 @@ class User(BaseUser):
     phone_validated = models.BooleanField(default=False)
 
     def sms_user(self, url_activation):
-        if settings.ACTIVATION_PROCESS:
-            print("Sending sms....")
-            try:
-                client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
-                client.messages.create(
-                    body=f"JoinUP verifica tu número : {url_activation}",
-                    from_=settings.TWILIO_NUMBER,
-                    to=self.phone_number
-                 )
-            except Exception as e:
-                print("Número de telefono inválido")
+        print("Sending sms....")
+        try:
+            client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+            client.messages.create(
+                body=f"JoinUP verifica tu número : {url_activation}",
+                from_=settings.TWILIO_NUMBER,
+                to=self.phone_number
+            )
+        except Exception as e:
+            print("Número de telefono inválido")
 
     def email_user(self, url_activation):
-        if settings.ACTIVATION_PROCESS:
-            print("Sending email....")
-            subject = "Bienvenido a JoinUP"
-            message = "Tu usuario se ha creado correctamente, verifica tu correo : " + url_activation
-            super().email_user(subject, message)
+        print("Sending email....")
+        subject = "Bienvenido a JoinUP"
+        message = "Tu usuario se ha creado correctamente, verifica tu correo : " + url_activation
+        super().email_user(subject, message)
 
     def activate_phone(self):
         self.phone_validated = True
