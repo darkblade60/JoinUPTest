@@ -28,5 +28,6 @@ jobs:
     - name: Run Tests
       env: 
         ACTIVATION_PROCESS: False
+        CELERY_TASK_ALWAYS_EAGER: True
       run: |
         python manage.py test
