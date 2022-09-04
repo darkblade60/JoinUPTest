@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-yhsw-xlu06^b!y0eusb#kxah&hz@ew3is%&5fd@mvv%gu%m7_h"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ["DEBUG"]
+DEBUG = os.environ.get("DEBUG",True)
 
 ALLOWED_HOSTS = []
 
@@ -140,15 +140,15 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 #EMAIL / SMS SENDER
 
-ACTIVATION_PROCESS = os.environ['ACTIVATION_PROCESS']
-EMAIL_HOST = os.environ["EMAIL_HOST"]
-EMAIL_USE_TLS = os.environ["EMAIL_USE_TLS"]
-EMAIL_PORT = os.environ["EMAIL_PORT"]
-EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
-EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
-TWILIO_ACCOUNT_SID = os.environ["TWILIO_ACCOUNT_SID"]
-TWILIO_AUTH_TOKEN = os.environ["TWILIO_AUTH_TOKEN"]
-TWILIO_NUMBER = os.environ["TWILIO_NUMBER"]
+ACTIVATION_PROCESS = os.environ.get("ACTIVATION_PROCESS", False)
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "")
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "")
+EMAIL_PORT = os.environ.get("EMAIL_PORT", "")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID", "")
+TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN", "")
+TWILIO_NUMBER = os.environ.get("TWILIO_NUMBER", "")
 
 #TOOLBAR
 INTERNAL_IPS = [
@@ -156,3 +156,9 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+
+# Celery settings
+CELERY_TASK_ALWAYS_EAGER = False
+CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
+CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
