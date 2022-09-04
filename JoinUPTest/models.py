@@ -24,6 +24,7 @@ class User(BaseUser):
 
     def sms_user(self, url_activation):
         if settings.ACTIVATION_PROCESS:
+            print("Sending sms....")
             try:
                 client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
                 client.messages.create(
@@ -36,6 +37,7 @@ class User(BaseUser):
 
     def email_user(self, url_activation):
         if settings.ACTIVATION_PROCESS:
+            print("Sending email....")
             subject = "Bienvenido a JoinUP"
             message = "Tu usuario se ha creado correctamente, verifica tu correo : " + url_activation
             super().email_user(subject, message)
