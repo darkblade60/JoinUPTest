@@ -62,7 +62,7 @@ class UserTestCase(APITestCase):
         self.client.post(reverse("signup"), data=self.data_register, format='json')
         response = self.client.post(reverse("login"), data=self.data_login, format='json')
         client = APIClient()
-        client.credentials(HTTP_AUTHORIZATION="Token " + response.data["token"])
+        client.credentials(HTTP_AUTHORIZATION=f"Token {response.data['token']}")
         reset_queries
         response = client.get(reverse("profile"))
         print(f"PROFILE Access count DB :  {len(connection.queries)}")
@@ -78,7 +78,7 @@ class UserTestCase(APITestCase):
         self.client.post(reverse("signup"), data=self.data_register, format='json')
         response = self.client.post(reverse("login"), data=self.data_login, format='json')
         client = APIClient()
-        client.credentials(HTTP_AUTHORIZATION="Token " + response.data["token"])
+        client.credentials(HTTP_AUTHORIZATION=f"Token {response.data['token']}")
 
         response = client.get(reverse("profile"))
         self.assertEqual(response.data["email_validated"], False),
