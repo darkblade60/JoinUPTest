@@ -30,4 +30,3 @@ jobs:
         ACTIVATION_PROCESS: ${{ secrets.ACTIVATION_PROCESS }}
       run: |
         python manage.py test
-        printenv
