@@ -6,6 +6,7 @@ from django.db.models.signals import post_save
 
 from JoinUPTest.custom_decorators import receiver_with_multiple_senders
 from JoinUPTest.models import User, ActivationCode, ActivationCodeType
+from djangoProject import settings
 
 
 @receiver_with_multiple_senders(
@@ -20,7 +21,8 @@ def on_create_signal(sender, instance=None, created=False, **kwargs):
         if sender is User:
             create_activation_codes(instance)
         if sender is ActivationCode:
-            send_activation_codes.delay(instance.user_id, instance.type, instance.url)
+            if settings.ACTIVATION_PROCESS:
+                send_activation_codes.delay(instance.user_id, instance.type, instance.url)
 
 
 def create_activation_codes(instance):
